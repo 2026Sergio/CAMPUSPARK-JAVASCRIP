@@ -1,77 +1,79 @@
 .contenedor-principal {
-    display: flex;       
-    flex-wrap: wrap;     
-    justify-content: center; 
-    gap: 30px;            
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
 }
 
 .seccion-registro {
-    flex: 1;             
-    max-width: 400px;    
-    min-width: 300px;     
+  flex: 1;
+  max-width: 400px;
+  min-width: 300px;
 }
 
 .mi-formulario {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .mi-formulario h3 {
-    text-align: center;
-    margin-top: 0;
-    color: #2c3e50;
+  text-align: center;
+  margin-top: 0;
+  color: #2c3e50;
 }
 
 .grupo {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #444;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #444;
 }
 
-input, select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-sizing: border-box; 
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #727272;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background: #0056b3;
+  background: #ffffff;
+  color: black;
 }
 
 .lista-registro {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .registro-card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 5px solid #007bff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-.contenedor3{
-    background-color: #ffffff;
+.contenedor3 {
+  background-color: #ffffff;
 }
