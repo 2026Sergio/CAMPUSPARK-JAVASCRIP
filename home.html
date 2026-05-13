@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=Q, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Campus Parking</title>
+    <link rel="stylesheet" href="./archivosCSS/nuevo.css">
 </head>
 <body>
-    
-    <h1>bienvenido</h1>
+
+    <header>
+        <button id="btn-menu" class="hamburguesa">☰</button>
+        <span class="logo">CAMPUS PARKING</span>
+    </header>
+
+    <nav id="menu-lateral" class="menu-navegacion">
+        <div class="user-info">
+            <img src="./IMAGENES/images.png" alt="admin">
+            <p>Admin</p>
+        </div>
+        <a href="#">panel</a>
+        <a href="#">Vehículos</a>
+        <a href="#">Pagos</a>
+        <a href="./index.html" class="logout">Cerrar Sesión</a>
+    </nav>
+
+    <div id="overlay" class="overlay"></div>
+    <script src="./moduloJAVASCRIPT/nuevo.js"></script>
 </body>
 </html>
