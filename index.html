@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=Q, initial-scale=1.0">
-    <title>campus parking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Parking - Login</title>
     <link rel="stylesheet" href="./archivosCSS/login.css">
 </head>
 <body>
-    <form>
+    <form id="formulario">
         <img src="./IMAGENES/images.png" alt="user-img">
-        <label for="username">usuario</label>
-        <input type="text" id="username" placeholder="correo" required>
-        <label for="password">usuario</label>
-        <input type="password" id="password" placeholder="contraseña" required>
+        <input type="text" id="username" placeholder="Usuario/Correo" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
         <div class="box-visible">
             <input type="checkbox" id="visible">
-            <label for="visible">Mostrar contraseña</label>
+            <span>Mostrar contraseña</span>
         </div>
-        <button type="sumbit" id="sumbit">iniciar secion</button>
+        
+        <button type="submit">Iniciar Sesión</button>
     </form>
+
     <script src="./moduloJAVASCRIPT/login.js"></script>
 </body>
 </html>
