@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Campus Parking</title>
+    <link rel="stylesheet" href="./archivosCSS/formulario.css">
     <link rel="stylesheet" href="./archivosCSS/nuevo.css">
 </head>
 <body>
@@ -12,17 +13,64 @@
         <button id="btn-menu" class="hamburguesa">☰</button>
         <span class="logo">CAMPUS PARKING</span>
     </header>
-
     <nav id="menu-lateral" class="menu-navegacion">
         <div class="user-info">
             <img src="./IMAGENES/images.png" alt="admin">
             <p>Admin</p>
         </div>
-        <a href="#">panel</a>
+        <a href="#">Panel</a>
         <a href="#">Vehículos</a>
         <a href="#">Pagos</a>
         <a href="./index.html" class="logout">Cerrar Sesión</a>
     </nav>
+
+    <main class="contenedor-principal">
+        <div class="seccion-registro">
+            <form id="formulario1" class="mi-formulario">
+                <h3>Registro A</h3>
+                <div class="grupo">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Ingrese su nombre..." required>
+                </div>
+                <div class="grupo">
+                    <label>Tipo de vehículo</label>
+                    <select id="vehiculo1" required>
+                        <option value="">Seleccione</option>
+                        <option value="moto">Moto</option>
+                        <option value="carro">Vehículo</option>
+                    </select>
+                </div>
+                <div class="grupo">
+                    <label>Fecha</label>
+                    <input type="date" id="fecha1" required>
+                </div>
+                <div class="grupo">
+                    <label>Hora de entrada</label>
+                    <input type="time" id="hora1" required>
+                </div>
+                <div class="grupo">
+                    <label>Espacio asignado</label>
+                    <input type="text" id="espacio1" placeholder="Espacio..." required>
+                </div>
+                <button type="submit">Guardar</button>
+            </form>
+            <div id="lista1" class="lista-registro"></div>
+        </div>
+        <div class="seccion-registro">
+            <form id="formulario2" class="mi-formulario">
+                <h3></h3>
+                <label>REGISTRO </label>
+                <input type="text">
+            </form>
+            <div id="lista2" class="lista-registro"></div>
+        </div>
+        <div>
+            <section id="contenedor3">
+                <h1>registro</h1>
+            </section>
+        </div>
+
+    </main>
 
     <div id="overlay" class="overlay"></div>
     <script src="./moduloJAVASCRIPT/nuevo.js"></script>

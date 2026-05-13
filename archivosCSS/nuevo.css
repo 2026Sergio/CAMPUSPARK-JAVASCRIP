@@ -8,24 +8,23 @@
 body {
     width: 100%;
     min-height: 100vh;
-    /* Tu gradiente solicitado */
     background: linear-gradient(to right, #116b70, #b8c072);
 }
 
 header {
-    background: #1c0585; /* Tu color de formulario */
+    background: #1c0585; 
     padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
-
 .hamburguesa {
     background: none;
     border: none;
-    color: #00f2ff; /* El color de tu botón */
+    color: #00f2ff;
     font-size: 30px;
+    width: 50px;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -35,15 +34,13 @@ header {
     font-weight: bold;
     letter-spacing: 1px;
 }
-
-/* Menú Lateral Estilo Dashboard */
 .menu-navegacion {
     position: fixed;
     top: 0;
     left: -280px;
-    width: 280px;
+    width: 200px;
     height: 100vh;
-    background: #1c0585; /* Color azul profundo solicitado */
+    background: #1c0585; 
     transition: 0.4s ease;
     display: flex;
     flex-direction: column;
