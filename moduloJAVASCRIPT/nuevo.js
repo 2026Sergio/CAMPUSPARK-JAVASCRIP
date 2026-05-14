@@ -88,5 +88,15 @@ function mostrarVehiculos(){
     });
 
 }
+function eliminarVehiculo(index){
 
+    vehiculos.splice(index, 1);
+
+    localStorage.setItem(
+        "vehiculos",
+        JSON.stringify(vehiculos)
+    );
+
+    mostrarVehiculos();
+}
 
