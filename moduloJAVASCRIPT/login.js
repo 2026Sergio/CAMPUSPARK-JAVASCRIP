@@ -19,3 +19,19 @@ document.getElementById('visible').addEventListener('change', (e) => {
     const passInput = document.getElementById('password');
     passInput.type = e.target.checked ? 'text' : 'password';
 });
+const btnAbrirRegistro = document.getElementById('btn-abrir-registro');
+const btnCerrarRegistro = document.getElementById('btn-cerrar-registro');
+const modalRegistro = document.getElementById('modal-registro');
+
+btnAbrirRegistro.addEventListener('click', (e) => {
+    e.preventDefault(); 
+    modalRegistro.classList.add('activo');
+});
+btnCerrarRegistro.addEventListener('click', () => {
+    modalRegistro.classList.remove('activo');
+});
+document.getElementById('form-registro').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert("Usuario registrado con éxito");
+    modalRegistro.classList.remove('activo');
+});
