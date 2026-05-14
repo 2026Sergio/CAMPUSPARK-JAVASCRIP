@@ -1,0 +1,33 @@
+@media(max-width:900px){
+
+    .contenedor-principal{
+
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+    .seccion-registro,
+    .tabla-container{
+
+        width:100%;
+    }
+
+    .contenedor-espacios{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .contenedor-espacios{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:400px){
+
+    .contenedor-espacios{
+        grid-template-columns:1fr;
+    }
+}
