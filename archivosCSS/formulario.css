@@ -2,263 +2,177 @@
     color:white;
     font-weight:bold;
 }
-
 .hamburguesa{
     background:none;
     border:none;
-
     color:white;
-
     font-size:30px;
-
     cursor:pointer;
 }
-
-
 .menu-navegacion{
-
     position:fixed;
-
     top:0;
     left:-250px;
-
     width:250px;
     height:100vh;
-
     background:rgba(255,255,255,0.2);
-
     backdrop-filter:blur(10px);
-
     display:flex;
-
     flex-direction:column;
-
     transition:0.4s;
-
     z-index:1000;
 }
-
 .menu-navegacion.active{
     left:0;
 }
-
 .menu-navegacion a{
-
     color:white;
-
     text-decoration:none;
-
     padding:20px;
-
     transition:0.3s;
 }
-
 .menu-navegacion a:hover{
     background:rgba(255,255,255,0.2);
 }
-
 .user-info{
-
     text-align:center;
-
     padding:30px;
 }
-
 .user-info img{
-
     width:80px;
-
     border-radius:50%;
 }
-
-/* ======== OVERLAY ======== */
-
 .overlay{
-
     display:none;
-
     position:fixed;
-
     width:100%;
     height:100%;
-
     background:rgba(0,0,0,0.5);
-
     top:0;
     left:0;
-
     z-index:999;
 }
-
 .overlay.active{
     display:block;
 }
-
-/* ======== CONTENIDO ======== */
-
 .contenedor-principal {
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:stretch;
-
   gap:30px;
-
   flex-wrap:wrap;
-
   margin-top:20px;
-
   padding:20px;
 }
-
-/* ======== FORMULARIO ======== */
-
 .seccion-registro {
-
   flex:0.7;
-
   min-width:300px;
-
   max-width:450px;
 }
-
 .mi-formulario {
-
   width:100%;
-
   min-height:100%;
-
   background: rgba(255,255,255,0.2);
-
   padding: 25px;
-
   border-radius: 15px;
-
   backdrop-filter: blur(10px);
-
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
-
 .mi-formulario h2 {
-
   text-align: center;
-
   color: white;
-
   margin-bottom: 20px;
 }
-
 .grupo {
-
   margin-bottom: 15px;
 }
-
 label {
-
   color: white;
-
   display: block;
-
   margin-bottom: 5px;
 }
-
 input,
 select {
-
   width: 100%;
-
   padding: 12px;
-
   border: none;
-
   border-radius: 8px;
-
   outline: none;
 }
-
 button {
-
   width: 100%;
-
   padding: 12px;
-
   border: none;
-
   border-radius: 8px;
-
   background: gray;
-
   color: white;
-
   font-weight: bold;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
-
 button:hover {
-
   background: white;
-
   color: black;
 }
-
 .tabla-container {
-
   flex:1.3;
-
   min-width:320px;
-
   max-width:none;
-
   min-height:100%;
-
   background: rgba(255,255,255,0.1);
-
   border-radius: 15px;
-
   padding: 20px;
-
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-
   overflow-x:auto;
 }
-
 .tabla-container h2 {
-
   color: white;
-
   text-align: center;
-
   margin-bottom: 20px;
 }
-
 table {
-
   width: 100%;
-
   border-collapse: collapse;
 }
-
 th,
 td {
-
   padding: 12px;
-
   text-align: center;
-
   color: white;
 }
-
 th {
-
   background: rgba(0,0,0,0.3);
 }
-
 tr:nth-child(even) {
-
   background: rgba(255,255,255,0.1);
+}
+.contenedor-espacios {
+  width: 95%;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 20px;
+}
+.espacio {
+  width: 100%;
+  height: 120px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align:center;
+}
+.espacio:hover{
+    transform:scale(1.03);
+}
+.libre {
+  background: green;
+}
+.ocupado {
+  background: red;
 }
