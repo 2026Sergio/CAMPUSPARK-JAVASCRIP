@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=Q, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./archivosCSS/nuevo.css">
+    <link rel="stylesheet" href="./archivosCSS/formulario.css">
+    <link rel="stylesheet" href="./archivosCSS/responsive.css">
+</head>
+<body>
+    <header>
+        <button id="btn-menu" class="hamburguesa">☰</button>
+        <span class="logo">CAMPUS PARKIN</span>
+        <h2>pago</h2>
+    </header>
+    <nav id="menu-lateral" class="menu-navegacion">
+        <div class="user-info">
+            <img src="./IMAGENES/images.png" alt="admin">
+            <p>Admin</p>
+        </div>
+        <a href="./home.html">home</a>
+        <a href="#">vehiculos</a>
+        <a href="./index.html">cerrar sesión</a>
+    </nav>
+    <div id="overlay" cloass="overlay"></div>
+    <main>
+        <div class="tabla-container">
+            <h2>entrada de vehiculo</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>placa del vehiculo</th>
+                        <th>tipo de vehiculo</th>
+                        <th>hora de entrada</th>
+                        <th>espacio asignado</th>
+                        <th>hora de entrada</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body"></tbody>
+            </table>
+        </div>
+        <div class="tabla-container">
+            <h2>salida del vehiculo</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>placa del vehiculo</th>
+                        <th>tipo de vehiculo</th>
+                        <th>hora de entrada</th>
+                        <th>espacio asignado</th>
+                        <th>hora de salida</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla body">
+                </tbody>
+            </table>
+        </div>
+        <div class="tabla-container">
+            <h1>historial del dia</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>hora de entrada</th>
+                        <th>hora de salida</th>
+                        <th>tiempo en parqueo</th>
+                        <th>total a pagar</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body"></tbody>
+            </table>
+        </div>
+    </main>
+    <script src="./moduloJAVASCRIPT/nuevo.js"></script>
+</body>
+</html>
+
