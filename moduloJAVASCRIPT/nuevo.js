@@ -23,7 +23,6 @@ actualizarSelectDinamico();
 mostrarVehiculos();
 mostrarHistorial();
 
-// --- FORMULARIO PRINCIPAL (REGISTRO Y EDICIÓN) ---
 formulario.addEventListener("submit", function(e){
     e.preventDefault();
     
@@ -38,7 +37,6 @@ formulario.addEventListener("submit", function(e){
         return;
     }
 
-    // --- 1. VALIDACIÓN REAL DE PLACA (REGEX) ---
     const regexPlaca = /^[A-Z]{3}[0-9]{3}$/;
     if (!regexPlaca.test(placaValor)) {
         alert("La placa debe tener formato ABC123");
@@ -130,8 +128,7 @@ window.eliminar = function(index) {
     let partesEntrada = v.hora.split(":");
     let minEntrada = (parseInt(partesEntrada[0]) * 60) + parseInt(partesEntrada[1]);
     let minSalida = (ahora.getHours() * 60) + ahora.getMinutes();
-    
-    // --- 2. VALIDACIÓN DE TIEMPO REAL ---
+  
     let diferencia = minSalida - minEntrada;
     if (diferencia <= 0) { 
         alert("Error: La hora de salida no puede ser anterior o igual a la hora de entrada.");
@@ -227,14 +224,14 @@ function actualizarSelectDinamico() {
     });
 }
 
-// --- BUSCADOR DE PLACAS CORREGIDO PARA TU HTML ---
+
 window.filtrarPorPlaca = function() {
-    const input = document.getElementById("buscadorPlaca"); // ID exacto de tu HTML
+    const input = document.getElementById("buscadorPlaca"); 
     const filtro = input.value.toUpperCase();
     const filas = tablaBody.getElementsByTagName("tr");
 
     for (let i = 0; i < filas.length; i++) {
-        const celdaPlaca = filas[i].getElementsByTagName("td")[2]; // Columna 2 es Placa
+        const celdaPlaca = filas[i].getElementsByTagName("td")[2];
         if (celdaPlaca) {
             const texto = celdaPlaca.textContent || celdaPlaca.innerText;
             if (texto.toUpperCase().indexOf(filtro) > -1) {
@@ -246,7 +243,6 @@ window.filtrarPorPlaca = function() {
     }
 };
 
-// --- LÓGICA DE PERFIL ---
 window.abrirPerfil = function() {
     const usuarioLogeado = JSON.parse(localStorage.getItem('usuario_actual'));
     if (usuarioLogeado) {
@@ -292,3 +288,15 @@ window.addEventListener('tipos-actualizados', () => {
     actualizarSelectDinamico();
     mostrarVehiculos(); 
 });
+
+fetch("https://api.open-meteo.com/v1/forecast?latitude=14.6407&longitude=-90.5133&current_weather=true")
+    .then(respuesta => respuesta.json())
+    .then(datos => {
+        
+        var climaDiv = document.getElementById("info-clima");
+        
+        if(climaDiv) {
+            climaDiv.innerHTML = "Clima: " + datos.current_weather.temperature + "°C <br>" + 
+                                 "Tiempo: " + datos.current_weather.time;
+        }console.log(datos)
+    });
