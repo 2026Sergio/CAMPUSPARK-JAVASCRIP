@@ -112,3 +112,86 @@ header {
 .tabla-contenedor2{
   color: #552727;
 }
+/* Estilos del Modal de Perfil */
+.contenedor-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+.contenedor-modal.activo {
+    display: flex; /* Se muestra al agregar la clase activo */
+}
+
+.modal-content-perfil {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #27ae60;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.modal-content-perfil h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.grupo-input {
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    display: block;
+    color: #aaa;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.grupo-input input {
+    width: 100%;
+    padding: 10px;
+    background: #2c2c2c;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.modal_botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-guardar {
+    flex: 1;
+    padding: 12px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancelar-modal {
+    flex: 1;
+    padding: 12px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-guardar:hover { background: #2ecc71; }
+.btn-cancelar-modal:hover { background: #555; }

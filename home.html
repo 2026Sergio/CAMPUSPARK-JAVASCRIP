@@ -13,16 +13,21 @@
         <button id="btn-menu" class="hamburguesa">☰</button>
         <span class="logo">CAMPUS PARKING</span>
     </header>
+
     <nav id="menu-lateral" class="menu-navegacion">
         <div class="user-info">
             <img src="./IMAGENES/images.png" alt="admin">
-            <p>Admin</p>
+            <p id="admin-name-display">Admin</p> 
         </div>
-        <a href="./historial.html">historial</a>
-        <a href="./registros.html">registros</a>
+        <a href="#" onclick="abrirPerfil()"> Mi Perfil</a>
+        <hr>
+        <a href="./historial.html">Historial</a>
+        <a href="./registros.html">Registros</a>
         <a href="./index.html">Cerrar sesión</a>
     </nav>
+
     <div id="overlay" class="overlay"></div>
+
     <main class="contenedor-principal">
         <div class="seccion-registro">
             <form id="formulario1" class="mi-formulario">
@@ -43,7 +48,7 @@
                 </div>
                 <div class="grupo">
                     <label>Placa (Formato: AAA123)</label>
-                    <input type="text" id="placa1" placeholder="Ej: PGT456" pattern="[A-Z]{3}[0-9]{3}" title="3 letras mayúsculas y 3 números" required>
+                    <input type="text" id="placa1" placeholder="Ej: PGT456" pattern="[A-Z,a-z]{3}[0-9]{3}" title="3 letras y 3 números" required>
                 </div>
                 <div class="grupo">
                     <label>Fecha</label>
@@ -64,28 +69,13 @@
 
         <div class="tabla-container">
             <h2>Vehículos en el Predio</h2>
-            <div class="tabla-container">
-    <h2>Vehículos en el Predio</h2>
-    
-    <div class="grupo-busqueda" style="margin-bottom: 15px;">
-        <input type="text" id="buscadorPlaca" placeholder="Buscar por placa..." 
-               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"
-               onkeyup="filtrarPorPlaca()">
-    </div>
+            
+            <div class="grupo-busqueda" style="margin-bottom: 15px;">
+                <input type="text" id="buscadorPlaca" placeholder="Buscar por placa..." 
+                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"
+                       onkeyup="filtrarPorPlaca()">
+            </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Placa</th>
-                <th>Espacio</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody id="tabla-body"></tbody>
-    </table>
-</div>
             <table>
                 <thead>
                     <tr>
@@ -113,6 +103,29 @@
             <div class="espacio libre" id="espacio-10"><p>Espacio 10</p></div>
         </div>
     </main>
+
+    <div class="contenedor-modal" id="modal-perfil">
+        <form id="form-perfil" class="modal-content-perfil">
+            <h2>Mi Perfil</h2>
+            <div class="grupo">
+                <label>Nombre</label>
+                <input type="text" id="edit-nombre" required>
+            </div>
+            <div class="grupo">
+                <label>Correo</label>
+                <input type="email" id="edit-email" required>
+            </div>
+            <div class="grupo">
+                <label>Contraseña</label>
+                <input type="password" id="edit-pass" required>
+            </div>
+            <div class="modal_botones">
+                <button type="button" id="btn-cerrar-perfil" class="btn-cancelar-modal">Cancelar</button>
+                <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+
     <script src="./moduloJAVASCRIPT/componentes-tipo.js"></script>
     <script src="./moduloJAVASCRIPT/nuevo.js"></script>
 </body>

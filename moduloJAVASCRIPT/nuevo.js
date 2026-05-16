@@ -220,3 +220,48 @@ window.addEventListener('tipos-actualizados', () => {
     actualizarSelectDinamico();
     mostrarVehiculos(); 
 });
+
+window.abrirPerfil = function() {
+    const usuarioLogeado = JSON.parse(localStorage.getItem('usuario_actual'));
+    
+    if (usuarioLogeado) {
+        document.getElementById('edit-nombre').value = usuarioLogeado.nombre;
+        document.getElementById('edit-email').value = usuarioLogeado.correo;
+        document.getElementById('edit-pass').value = usuarioLogeado.pass;
+        
+        document.getElementById('modal-perfil').classList.add('activo');
+    } else {
+        alert("No se encontró sesión activa.");
+    }
+};
+
+document.getElementById('btn-cerrar-perfil').addEventListener('click', () => {
+    document.getElementById('modal-perfil').classList.remove('activo');
+});
+
+document.getElementById('form-perfil').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const usuarioSesion = JSON.parse(localStorage.getItem('usuario_actual'));
+    const listaUsuarios = JSON.parse(localStorage.getItem('usuarios_sistema')) || [];
+    
+    const nuevosDatos = {
+        nombre: document.getElementById('edit-nombre').value,
+        correo: document.getElementById('edit-email').value,
+        pass: document.getElementById('edit-pass').value
+    };
+
+    const index = listaUsuarios.findIndex(u => u.correo === usuarioSesion.correo);
+    if (index !== -1) {
+        listaUsuarios[index] = nuevosDatos;
+        localStorage.setItem('usuarios_sistema', JSON.stringify(listaUsuarios));
+    }
+
+    localStorage.setItem('usuario_actual', JSON.stringify(nuevosDatos));
+
+    const displayNombre = document.getElementById('admin-name-display');
+    if (displayNombre) displayNombre.textContent = nuevosDatos.nombre;
+
+    alert("Perfil actualizado con éxito.");
+    document.getElementById('modal-perfil').classList.remove('activo');
+});
