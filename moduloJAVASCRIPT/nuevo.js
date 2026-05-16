@@ -19,6 +19,7 @@ overlay.addEventListener('click', toggleMenu);
 let vehiculos = JSON.parse(localStorage.getItem("vehiculos")) || [];
 let historial = JSON.parse(localStorage.getItem("historial")) || [];
 
+actualizarSelectDinamico();
 mostrarVehiculos();
 mostrarHistorial();
 
@@ -30,13 +31,11 @@ formulario.addEventListener("submit", function(e){
     let esEdicion = document.getElementById("placa1").readOnly;
 
     if (!esEdicion) {
-
         const placaRepetida = vehiculos.some(v => v.placa === placaValor);
         if (placaRepetida) {
             alert("Error: El vehículo con placa " + placaValor + " ya se encuentra en el parqueo.");
             return;
         }
-
         const espacioOcupado = vehiculos.some(v => v.espacio === espacioValor);
         if (espacioOcupado) {
             alert("Error: El espacio " + espacioValor + " ya está ocupado. Elige otro.");
@@ -48,62 +47,35 @@ formulario.addEventListener("submit", function(e){
         alert("La placa debe tener exactamente 6 caracteres (3 letras y 3 números)");
         return;
     }
-    for (let i = 0; i < 3; i++) {
-        let letra = placaValor[i];
-        if (!(letra >= 'A' && letra <= 'Z')) {
-            alert("Los primeros 3 caracteres deben ser letras de la A a la Z");
-            return;
-        }
-    }
-    for (let i = 3; i < 6; i++) {
-        let numero = placaValor[i];
-        if (!(numero >= '0' && numero <= '9')) {
-            alert("Los últimos 3 caracteres deben ser números del 0 al 9");
-            return;
-        }
-    }
 
-    const tipo = document.getElementById("vehiculo1").value;
-    let precio = 0;
-    if (tipo === "Moto") {
-        precio = 5;
-    } else if (tipo === "Carro") {
-        precio = 10;
-    } else {
-        precio = 15; 
-    }
+    const tipoSeleccionado = document.getElementById("vehiculo1").value;
+    const tiposEnMemoria = JSON.parse(localStorage.getItem('tiposVehiculos')) || [];
+    const infoTipo = tiposEnMemoria.find(t => t.nombre === tipoSeleccionado);
+    
+  
+    let precio = infoTipo ? parseFloat(infoTipo.tarifa) : 10;
+   
 
     const datosVehiculo = {
         nombre: document.getElementById("nombre").value,
-        tipo: tipo,
+        tipo: tipoSeleccionado,
         placa: placaValor,
         precio: precio,
         fecha: document.getElementById("fecha1").value,
         hora: document.getElementById("hora1").value,
         espacio: espacioValor
     };
-    console.log("Datos del vehículo a procesar:", datosVehiculo);
 
-    let indiceExistente = -1;
-    for (let i = 0; i < vehiculos.length; i++) {
-        if (vehiculos[i].placa === placaValor) {
-            indiceExistente = i;
-            break;
-        }
-    }
+    let indiceExistente = vehiculos.findIndex(v => v.placa === placaValor);
 
     if (indiceExistente !== -1) {
         vehiculos[indiceExistente] = datosVehiculo;
-        alert("Datos del vehículo con placa " + placaValor + " actualizados.");
+        alert("Datos del vehículo actualizados.");
     } else {
         vehiculos.push(datosVehiculo);
     }
 
     localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-    
-    console.log("Inventario actualizado:");
-    console.table(vehiculos);
-
     resetearFormulario();
     mostrarVehiculos();
 });
@@ -113,16 +85,13 @@ function mostrarVehiculos(){
     tablaBody.innerHTML = "";
 
     let todosLosEspacios = document.querySelectorAll(".espacio");
-    for (let i = 0; i < todosLosEspacios.length; i++) {
-        let div = todosLosEspacios[i];
+    todosLosEspacios.forEach(div => {
         div.className = "espacio libre";
         let n = div.id.split("-")[1];
         div.innerHTML = "<p>Espacio " + n + "</p><p>Libre</p>";
-    }
+    });
 
-    for (let i = 0; i < vehiculos.length; i++) {
-        let v = vehiculos[i];
-        
+    vehiculos.forEach((v, i) => {
         tablaBody.innerHTML += "<tr>" +
             "<td>" + v.nombre + "</td>" +
             "<td>" + v.tipo + " (Q" + v.precio + ")</td>" +
@@ -139,14 +108,18 @@ function mostrarVehiculos(){
             divEspacio.className = "espacio ocupado";
             divEspacio.innerHTML = "<p>Espacio " + v.espacio + "</p><p>" + v.nombre + "</p><p><strong>" + v.placa + "</strong></p><p>Q" + v.precio + "</p>";
         }
-    }
+    });
 }
+
 
 window.eliminar = function(index) {
     let v = vehiculos[index];
     let ahora = new Date();
     let horaSalida = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
-    
+    const tiposEnMemoria = JSON.parse(localStorage.getItem('tiposVehiculos')) || [];
+    const infoTipo = tiposEnMemoria.find(t => t.nombre === v.tipo);
+    let precioCobro = infoTipo ? parseFloat(infoTipo.tarifa) : v.precio;
+
     let partesEntrada = v.hora.split(":");
     let minEntrada = (parseInt(partesEntrada[0]) * 60) + parseInt(partesEntrada[1]);
     let minSalida = (ahora.getHours() * 60) + ahora.getMinutes();
@@ -155,7 +128,7 @@ window.eliminar = function(index) {
     if (diferencia <= 0) { diferencia = 60; }
     
     let totalHoras = Math.ceil(diferencia / 60);
-    let cobroTotal = totalHoras * v.precio;
+    let cobroTotal = totalHoras * precioCobro;
 
     let datosSalida = {
         placa: v.placa,
@@ -181,8 +154,7 @@ function mostrarHistorial() {
     if (tablaSalidaBody) tablaSalidaBody.innerHTML = "";
     if (tablaHistorialBody) tablaHistorialBody.innerHTML = "";
 
-    for (let i = 0; i < historial.length; i++) {
-        let h = historial[i];
+    historial.forEach(h => {
         if (tablaSalidaBody) {
             tablaSalidaBody.innerHTML += "<tr>" +
                 "<td>" + h.placa + "</td>" +
@@ -200,12 +172,11 @@ function mostrarHistorial() {
                 "<td>" + h.pago + "</td>" +
             "</tr>";
         }
-    }
+    });
 }
 
 window.subirParaEditar = function(placaBusqueda) {
     let v = vehiculos.find(veh => veh.placa === placaBusqueda);
-
     if(v) {
         document.getElementById("nombre").value = v.nombre;
         document.getElementById("vehiculo1").value = v.tipo;
@@ -231,3 +202,21 @@ function resetearFormulario() {
     btnSubmit.style.background = "";
     btnCancelar.style.display = "none";
 }
+
+function actualizarSelectDinamico() {
+    const select = document.getElementById("vehiculo1");
+    if(!select) return;
+    const tipos = JSON.parse(localStorage.getItem('tiposVehiculos')) || [];
+    select.innerHTML = '<option value="">Seleccione tipo</option>';
+    tipos.forEach(t => {
+        const op = document.createElement("option");
+        op.value = t.nombre;
+        op.textContent = `${t.nombre} (Q${t.tarifa})`;
+        select.appendChild(op);
+    });
+}
+
+window.addEventListener('tipos-actualizados', () => {
+    actualizarSelectDinamico();
+    mostrarVehiculos(); 
+});
