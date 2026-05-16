@@ -99,4 +99,3 @@ function eliminarVehiculo(index){
 
     mostrarVehiculos();
 }
-
