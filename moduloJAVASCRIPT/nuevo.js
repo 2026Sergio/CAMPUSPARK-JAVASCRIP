@@ -78,7 +78,7 @@ formulario.addEventListener("submit", function(e){
     localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
     resetearFormulario();
     mostrarVehiculos();
-});
+});console.log(vehiculos)
 
 function mostrarVehiculos(){
     if(!tablaBody) return;
