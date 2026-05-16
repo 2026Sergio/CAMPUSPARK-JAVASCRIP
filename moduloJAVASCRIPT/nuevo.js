@@ -6,7 +6,6 @@ const tablaBody = document.getElementById("tabla-body");
 const btnSubmit = document.getElementById("btn-submit");
 const btnCancelar = document.getElementById("btn-cancelar");
 
-// IDs para las tablas de historial (según tu imagen)
 const tablaSalidaBody = document.getElementById("tabla-salida-body");
 const tablaHistorialBody = document.getElementById("tabla-historial-body");
 
@@ -17,7 +16,6 @@ function toggleMenu(){
 btnMenu.addEventListener('click', toggleMenu);
 overlay.addEventListener('click', toggleMenu);
 
-// Cargamos vehículos activos e historial
 let vehiculos = JSON.parse(localStorage.getItem("vehiculos")) || [];
 let historial = JSON.parse(localStorage.getItem("historial")) || [];
 
@@ -28,7 +26,24 @@ formulario.addEventListener("submit", function(e){
     e.preventDefault();
     
     let placaValor = document.getElementById("placa1").value.toUpperCase();
-    
+    let espacioValor = document.getElementById("espacio1").value;
+    let esEdicion = document.getElementById("placa1").readOnly;
+
+    if (!esEdicion) {
+
+        const placaRepetida = vehiculos.some(v => v.placa === placaValor);
+        if (placaRepetida) {
+            alert("Error: El vehículo con placa " + placaValor + " ya se encuentra en el parqueo.");
+            return;
+        }
+
+        const espacioOcupado = vehiculos.some(v => v.espacio === espacioValor);
+        if (espacioOcupado) {
+            alert("Error: El espacio " + espacioValor + " ya está ocupado. Elige otro.");
+            return;
+        }
+    }
+
     if (placaValor.length !== 6) {
         alert("La placa debe tener exactamente 6 caracteres (3 letras y 3 números)");
         return;
@@ -65,8 +80,9 @@ formulario.addEventListener("submit", function(e){
         precio: precio,
         fecha: document.getElementById("fecha1").value,
         hora: document.getElementById("hora1").value,
-        espacio: document.getElementById("espacio1").value
+        espacio: espacioValor
     };
+    console.log("Datos del vehículo a procesar:", datosVehiculo);
 
     let indiceExistente = -1;
     for (let i = 0; i < vehiculos.length; i++) {
@@ -84,6 +100,10 @@ formulario.addEventListener("submit", function(e){
     }
 
     localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
+    
+    console.log("Inventario actualizado:");
+    console.table(vehiculos);
+
     resetearFormulario();
     mostrarVehiculos();
 });
@@ -122,29 +142,21 @@ function mostrarVehiculos(){
     }
 }
 
-// --- FUNCIÓN DE SALIDA E HISTORIAL ---
 window.eliminar = function(index) {
     let v = vehiculos[index];
-    
-    // Capturar hora de salida actual
     let ahora = new Date();
     let horaSalida = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
     
-    // Calcular minutos de entrada y salida para saber la diferencia
     let partesEntrada = v.hora.split(":");
     let minEntrada = (parseInt(partesEntrada[0]) * 60) + parseInt(partesEntrada[1]);
     let minSalida = (ahora.getHours() * 60) + ahora.getMinutes();
     
     let diferencia = minSalida - minEntrada;
-    
-    // Si la diferencia es menor a 1 hora o negativa, cobramos 1 hora mínimo
     if (diferencia <= 0) { diferencia = 60; }
     
-    // Calcular horas (redondeando hacia arriba)
     let totalHoras = Math.ceil(diferencia / 60);
     let cobroTotal = totalHoras * v.precio;
 
-    // Crear objeto para el historial
     let datosSalida = {
         placa: v.placa,
         tipo: v.tipo,
@@ -155,7 +167,6 @@ window.eliminar = function(index) {
         pago: "Q" + cobroTotal
     };
 
-    // Guardar y mover datos
     historial.push(datosSalida);
     vehiculos.splice(index, 1);
 
@@ -172,8 +183,6 @@ function mostrarHistorial() {
 
     for (let i = 0; i < historial.length; i++) {
         let h = historial[i];
-
-        // Tabla "Salida del Vehículo"
         if (tablaSalidaBody) {
             tablaSalidaBody.innerHTML += "<tr>" +
                 "<td>" + h.placa + "</td>" +
@@ -183,8 +192,6 @@ function mostrarHistorial() {
                 "<td>" + h.hSalida + "</td>" +
             "</tr>";
         }
-
-        // Tabla "Historial del Día"
         if (tablaHistorialBody) {
             tablaHistorialBody.innerHTML += "<tr>" +
                 "<td>" + h.hEntrada + "</td>" +
@@ -196,31 +203,8 @@ function mostrarHistorial() {
     }
 }
 
-window.filtrarPorPlaca = function() {
-    let busqueda = document.getElementById("buscadorPlaca").value.toUpperCase();
-    let filas = tablaBody.getElementsByTagName("tr");
-
-    for (let i = 0; i < filas.length; i++) {
-        let celdaPlaca = filas[i].getElementsByTagName("td")[2];
-        if (celdaPlaca) {
-            let textoPlaca = celdaPlaca.textContent || celdaPlaca.innerText;
-            if (textoPlaca.toUpperCase().indexOf(busqueda) > -1) {
-                filas[i].style.display = "";
-            } else {
-                filas[i].style.display = "none";
-            }
-        }
-    }
-}
-
 window.subirParaEditar = function(placaBusqueda) {
-    let v = null;
-    for (let i = 0; i < vehiculos.length; i++) {
-        if (vehiculos[i].placa === placaBusqueda) {
-            v = vehiculos[i];
-            break;
-        }
-    }
+    let v = vehiculos.find(veh => veh.placa === placaBusqueda);
 
     if(v) {
         document.getElementById("nombre").value = v.nombre;
