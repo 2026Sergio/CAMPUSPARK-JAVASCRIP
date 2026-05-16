@@ -6,6 +6,10 @@ const tablaBody = document.getElementById("tabla-body");
 const btnSubmit = document.getElementById("btn-submit");
 const btnCancelar = document.getElementById("btn-cancelar");
 
+// IDs para las tablas de historial (según tu imagen)
+const tablaSalidaBody = document.getElementById("tabla-salida-body");
+const tablaHistorialBody = document.getElementById("tabla-historial-body");
+
 function toggleMenu(){
     menu.classList.toggle('active');
     overlay.classList.toggle('active');
@@ -13,9 +17,12 @@ function toggleMenu(){
 btnMenu.addEventListener('click', toggleMenu);
 overlay.addEventListener('click', toggleMenu);
 
+// Cargamos vehículos activos e historial
 let vehiculos = JSON.parse(localStorage.getItem("vehiculos")) || [];
+let historial = JSON.parse(localStorage.getItem("historial")) || [];
 
 mostrarVehiculos();
+mostrarHistorial();
 
 formulario.addEventListener("submit", function(e){
     e.preventDefault();
@@ -40,6 +47,7 @@ formulario.addEventListener("submit", function(e){
             return;
         }
     }
+
     const tipo = document.getElementById("vehiculo1").value;
     let precio = 0;
     if (tipo === "Moto") {
@@ -59,6 +67,7 @@ formulario.addEventListener("submit", function(e){
         hora: document.getElementById("hora1").value,
         espacio: document.getElementById("espacio1").value
     };
+
     let indiceExistente = -1;
     for (let i = 0; i < vehiculos.length; i++) {
         if (vehiculos[i].placa === placaValor) {
@@ -90,6 +99,7 @@ function mostrarVehiculos(){
         let n = div.id.split("-")[1];
         div.innerHTML = "<p>Espacio " + n + "</p><p>Libre</p>";
     }
+
     for (let i = 0; i < vehiculos.length; i++) {
         let v = vehiculos[i];
         
@@ -108,6 +118,80 @@ function mostrarVehiculos(){
         if(divEspacio){
             divEspacio.className = "espacio ocupado";
             divEspacio.innerHTML = "<p>Espacio " + v.espacio + "</p><p>" + v.nombre + "</p><p><strong>" + v.placa + "</strong></p><p>Q" + v.precio + "</p>";
+        }
+    }
+}
+
+// --- FUNCIÓN DE SALIDA E HISTORIAL ---
+window.eliminar = function(index) {
+    let v = vehiculos[index];
+    
+    // Capturar hora de salida actual
+    let ahora = new Date();
+    let horaSalida = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
+    
+    // Calcular minutos de entrada y salida para saber la diferencia
+    let partesEntrada = v.hora.split(":");
+    let minEntrada = (parseInt(partesEntrada[0]) * 60) + parseInt(partesEntrada[1]);
+    let minSalida = (ahora.getHours() * 60) + ahora.getMinutes();
+    
+    let diferencia = minSalida - minEntrada;
+    
+    // Si la diferencia es menor a 1 hora o negativa, cobramos 1 hora mínimo
+    if (diferencia <= 0) { diferencia = 60; }
+    
+    // Calcular horas (redondeando hacia arriba)
+    let totalHoras = Math.ceil(diferencia / 60);
+    let cobroTotal = totalHoras * v.precio;
+
+    // Crear objeto para el historial
+    let datosSalida = {
+        placa: v.placa,
+        tipo: v.tipo,
+        hEntrada: v.hora,
+        espacio: v.espacio,
+        hSalida: horaSalida,
+        tiempo: totalHoras + " hora(s)",
+        pago: "Q" + cobroTotal
+    };
+
+    // Guardar y mover datos
+    historial.push(datosSalida);
+    vehiculos.splice(index, 1);
+
+    localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
+    localStorage.setItem("historial", JSON.stringify(historial));
+    
+    mostrarVehiculos();
+    mostrarHistorial();
+};
+
+function mostrarHistorial() {
+    if (tablaSalidaBody) tablaSalidaBody.innerHTML = "";
+    if (tablaHistorialBody) tablaHistorialBody.innerHTML = "";
+
+    for (let i = 0; i < historial.length; i++) {
+        let h = historial[i];
+
+        // Tabla "Salida del Vehículo"
+        if (tablaSalidaBody) {
+            tablaSalidaBody.innerHTML += "<tr>" +
+                "<td>" + h.placa + "</td>" +
+                "<td>" + h.tipo + "</td>" +
+                "<td>" + h.hEntrada + "</td>" +
+                "<td>" + h.espacio + "</td>" +
+                "<td>" + h.hSalida + "</td>" +
+            "</tr>";
+        }
+
+        // Tabla "Historial del Día"
+        if (tablaHistorialBody) {
+            tablaHistorialBody.innerHTML += "<tr>" +
+                "<td>" + h.hEntrada + "</td>" +
+                "<td>" + h.hSalida + "</td>" +
+                "<td>" + h.tiempo + "</td>" +
+                "<td>" + h.pago + "</td>" +
+            "</tr>";
         }
     }
 }
@@ -153,12 +237,9 @@ window.subirParaEditar = function(placaBusqueda) {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 };
-window.eliminar = function(index){
-    vehiculos.splice(index, 1);
-    localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-    mostrarVehiculos();
-};
+
 btnCancelar.onclick = resetearFormulario;
+
 function resetearFormulario() {
     formulario.reset();
     document.getElementById("placa1").readOnly = false;
