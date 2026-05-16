@@ -20,22 +20,24 @@
         </div>
         <button type="submit">Iniciar Sesión</button>
          <p>
-        ¿No tienes cuenta? <a href="#" id="btn-abrir-registro" >Regístrate aquí</a>
+        ¿No tienes cuenta? <a href="#" id="btn-abrir-registro" >Modificar datos</a>
     </p>
     </form>
     <br>
     </p>
     <div class="contenedor-modal" id="modal-registro">
-        <form id="form-registro" class="modal-content">
-            <h2">Crear Cuenta</h2>
-            <input type="text" id="reg-username" placeholder="Nombre de Usuario" required>
-            <input type="text" id="reg-email" placeholder="Correo Electrónico" required>
-            <input type="password" id="reg-password" placeholder="Contraseña" required>
-            <div class="modal_botones">
-                <button type="button">Cancelar</button>
-                <button type="submit">Registrar</button>
-            </div>
-        </form>
+    <form id="form-registro" class="modal-content">
+        <h2 style="color: white; margin-bottom: 20px;">Editar Perfil</h2>
+        <input type="text" id="reg-username" placeholder="Nuevo Nombre de Usuario" required>
+        <input type="text" id="reg-email" placeholder="Nuevo Correo Electrónico" required>
+        <input type="password" id="reg-password" placeholder="Nueva Contraseña" required>
+        
+        <div class="modal_botones">
+            <button type="button">Cancelar</button>
+            <button type="submit">Guardar Cambios</button>
+        </div>
+    </form>
+</div>
     </div>
     </main>
     <script src="./moduloJAVASCRIPT/login.js"></script>

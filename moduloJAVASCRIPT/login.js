@@ -1,36 +1,26 @@
 const formulario = document.getElementById('formulario');
-const formRegistro = document.getElementById('form-registro');
+const formRegistro = document.getElementById('form-registro'); 
 const modalRegistro = document.getElementById('modal-registro');
 const btnAbrirRegistro = document.getElementById('btn-abrir-registro');
 const btnCerrarRegistro = document.querySelector('#form-registro button[type="button"]');
 
-let usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios_sistema')) || [];
+let datosAdmin = JSON.parse(localStorage.getItem('datos_admin')) || {
+    nombre: "admin",
+    correo: "admin@campusparking.com",
+    pass: "Admin123"
+};
 
 const extraerDatos = (e) => {
     e.preventDefault();
     let user = document.getElementById('username').value;
     let password = document.getElementById('password').value;
     
-    const USER_CORRECTO = "admin@campusparking.com";
-    const PASS_CORRECTA = "Admin123";
-
-    const usuarioEncontrado = usuariosRegistrados.find(u => u.correo === user && u.pass === password);
-
-    if ((user === USER_CORRECTO && password === PASS_CORRECTA) || usuarioEncontrado) {
-
+    if (user === datosAdmin.correo && password === datosAdmin.pass) {
         console.log("%c LOGIN EXITOSO ", "background: #27ae60; color: white; font-weight: bold;");
-        console.log({
-            evento: "Inicio de Sesión",
-            usuario_actual: user,
-            perfil: usuarioEncontrado ? "Usuario Externo" : "Administrador",
-            fecha: new Date().toLocaleString()
-        });
-
         alert("Acceso concedido. ¡Bienvenido!");
         window.location.href = './home.html';
     } else {
         alert("Usuario o contraseña incorrectos.");
-        console.warn("Intento de acceso fallido:", { user, fecha: new Date().toLocaleString() });
     }
 }
 
@@ -39,32 +29,23 @@ formulario.addEventListener('submit', extraerDatos);
 formRegistro.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const nuevoEmail = document.getElementById('reg-email').value;
-    const nuevaPass = document.getElementById('reg-password').value;
-    const nuevoNombre = document.getElementById('reg-username').value;
+    datosAdmin.nombre = document.getElementById('reg-username').value;
+    datosAdmin.correo = document.getElementById('reg-email').value;
+    datosAdmin.pass = document.getElementById('reg-password').value;
 
-    if (usuariosRegistrados.some(u => u.correo === nuevoEmail)) {
-        alert("Este correo ya está registrado.");
-        return;
-    }
-    const nuevoUsuario = {
-        nombre: nuevoNombre,
-        correo: nuevoEmail,
-        pass: nuevaPass
-    };
+    localStorage.setItem('datos_admin', JSON.stringify(datosAdmin));
 
-    usuariosRegistrados.push(nuevoUsuario);
-    localStorage.setItem('usuarios_sistema', JSON.stringify(usuariosRegistrados));
+    console.log("DATOS DE PERFIL ACTUALIZADOS:", datosAdmin);
 
-    console.log("NUEVO USUARIO REGISTRADO:", nuevoUsuario);
-
-    alert("Cuenta creada con éxito. Ahora ya puedes iniciar sesión.");
+    alert("Datos actualizados con éxito. Ya puedes iniciar sesión con las nuevas credenciales.");
     modalRegistro.classList.remove('activo');
-    formRegistro.reset();
 });
 
 btnAbrirRegistro.addEventListener('click', (e) => {
     e.preventDefault();
+    document.getElementById('reg-username').value = datosAdmin.nombre;
+    document.getElementById('reg-email').value = datosAdmin.correo;
+    document.getElementById('reg-password').value = datosAdmin.pass;
     modalRegistro.classList.add('activo');
 });
 
