@@ -144,6 +144,9 @@ form button {
   margin-bottom: 20px; 
   transition: all 0.3s ease;
 }
+#btn-abrir-registro{
+  color: #fff;
+}
 #btn-cerrar-registro{
   background: #333; color: white;
 }

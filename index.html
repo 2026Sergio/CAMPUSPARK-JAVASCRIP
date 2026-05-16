@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Parking - Login</title>
     <link rel="stylesheet" href="./archivosCSS/login.css">
+    <link rel="stylesheet" href="./archivosCSS/responsive.css">
 </head>
 <body>
-    <form id="formulario">
+    <main>
+        <form id="formulario">
         <img src="./IMAGENES/images.png" alt="user-img">
         <input type="text" id="username" placeholder="Usuario/Correo" required>
         <input type="password" id="password" placeholder="Contraseña" required>
@@ -17,14 +19,15 @@
             <span>Mostrar contraseña</span>
         </div>
         <button type="submit">Iniciar Sesión</button>
+         <p>
+        ¿No tienes cuenta? <a href="#" id="btn-abrir-registro" >Regístrate aquí</a>
+    </p>
     </form>
     <br>
-    <p style="color: white; font-size: 0.8rem; margin-top: 15px;">
-        ¿No tienes cuenta? <a href="#" id="btn-abrir-registro" style="color: #fff; font-weight: bold;">Regístrate aquí</a>
     </p>
     <div class="contenedor-modal" id="modal-registro">
         <form id="form-registro" class="modal-content">
-            <h2 style="color: white; margin-bottom: 20px;">Crear Cuenta</h2>
+            <h2">Crear Cuenta</h2>
             <input type="text" id="reg-username" placeholder="Nombre de Usuario" required>
             <input type="text" id="reg-email" placeholder="Correo Electrónico" required>
             <input type="password" id="reg-password" placeholder="Contraseña" required>
@@ -34,6 +37,7 @@
             </div>
         </form>
     </div>
+    </main>
     <script src="./moduloJAVASCRIPT/login.js"></script>
 </body>
 </html>

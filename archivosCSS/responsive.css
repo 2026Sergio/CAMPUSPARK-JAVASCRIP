@@ -31,3 +31,53 @@
         grid-template-columns:1fr;
     }
 }
+
+@media (max-width: 480px) {
+    #formulario {
+        width: 90%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    input {
+        font-size: 16px; 
+    }
+
+    button {
+        padding: 15px; 
+    }
+}
+.contenedor-tabla {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.contenedor-espacios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 10px;
+}
+
+@media (max-width: 600px) {
+  
+    #menu-lateral {
+        width: 100%;
+        left: -100%; 
+    }
+    
+    #menu-lateral.active {
+        left: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
