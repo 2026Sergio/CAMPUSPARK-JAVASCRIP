@@ -23,38 +23,46 @@ actualizarSelectDinamico();
 mostrarVehiculos();
 mostrarHistorial();
 
+// --- FORMULARIO PRINCIPAL (REGISTRO Y EDICIÓN) ---
 formulario.addEventListener("submit", function(e){
     e.preventDefault();
     
-    let placaValor = document.getElementById("placa1").value.toUpperCase();
+    // Capturamos valores y limpiamos
+    let placaInput = document.getElementById("placa1");
+    let placaValor = placaInput.value.trim().toUpperCase(); 
+    let horaValor = document.getElementById("hora1").value;
     let espacioValor = document.getElementById("espacio1").value;
-    let esEdicion = document.getElementById("placa1").readOnly;
+    let esEdicion = placaInput.readOnly;
+
+    // VALIDACIÓN FLEXIBLE: Solo verificamos que no estén vacíos
+    if (!horaValor) {
+        alert("Por favor, ingresa una hora de entrada.");
+        return;
+    }
+
+    if (placaValor.length === 0) {
+        alert("La placa no puede estar vacía.");
+        return;
+    }
 
     if (!esEdicion) {
         const placaRepetida = vehiculos.some(v => v.placa === placaValor);
         if (placaRepetida) {
-            alert("Error: El vehículo con placa " + placaValor + " ya se encuentra en el parqueo.");
+            alert("Error: La placa " + placaValor + " ya está en el parqueo.");
             return;
         }
         const espacioOcupado = vehiculos.some(v => v.espacio === espacioValor);
         if (espacioOcupado) {
-            alert("Error: El espacio " + espacioValor + " ya está ocupado. Elige otro.");
+            alert("Error: El espacio " + espacioValor + " ya está ocupado.");
             return;
         }
-    }
-
-    if (placaValor.length !== 6) {
-        alert("La placa debe tener exactamente 6 caracteres (3 letras y 3 números)");
-        return;
     }
 
     const tipoSeleccionado = document.getElementById("vehiculo1").value;
     const tiposEnMemoria = JSON.parse(localStorage.getItem('tiposVehiculos')) || [];
     const infoTipo = tiposEnMemoria.find(t => t.nombre === tipoSeleccionado);
     
-  
     let precio = infoTipo ? parseFloat(infoTipo.tarifa) : 10;
-   
 
     const datosVehiculo = {
         nombre: document.getElementById("nombre").value,
@@ -62,7 +70,7 @@ formulario.addEventListener("submit", function(e){
         placa: placaValor,
         precio: precio,
         fecha: document.getElementById("fecha1").value,
-        hora: document.getElementById("hora1").value,
+        hora: horaValor,
         espacio: espacioValor
     };
 
@@ -70,7 +78,7 @@ formulario.addEventListener("submit", function(e){
 
     if (indiceExistente !== -1) {
         vehiculos[indiceExistente] = datosVehiculo;
-        alert("Datos del vehículo actualizados.");
+        alert("Datos actualizados.");
     } else {
         vehiculos.push(datosVehiculo);
     }
@@ -78,7 +86,7 @@ formulario.addEventListener("submit", function(e){
     localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
     resetearFormulario();
     mostrarVehiculos();
-});console.log(vehiculos)
+});
 
 function mostrarVehiculos(){
     if(!tablaBody) return;
@@ -111,11 +119,11 @@ function mostrarVehiculos(){
     });
 }
 
-
 window.eliminar = function(index) {
     let v = vehiculos[index];
     let ahora = new Date();
     let horaSalida = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
+    
     const tiposEnMemoria = JSON.parse(localStorage.getItem('tiposVehiculos')) || [];
     const infoTipo = tiposEnMemoria.find(t => t.nombre === v.tipo);
     let precioCobro = infoTipo ? parseFloat(infoTipo.tarifa) : v.precio;
@@ -216,19 +224,13 @@ function actualizarSelectDinamico() {
     });
 }
 
-window.addEventListener('tipos-actualizados', () => {
-    actualizarSelectDinamico();
-    mostrarVehiculos(); 
-});
-
+// --- LÓGICA DE PERFIL ---
 window.abrirPerfil = function() {
     const usuarioLogeado = JSON.parse(localStorage.getItem('usuario_actual'));
-    
     if (usuarioLogeado) {
         document.getElementById('edit-nombre').value = usuarioLogeado.nombre;
         document.getElementById('edit-email').value = usuarioLogeado.correo;
         document.getElementById('edit-pass').value = usuarioLogeado.pass;
-        
         document.getElementById('modal-perfil').classList.add('activo');
     } else {
         alert("No se encontró sesión activa.");
@@ -241,7 +243,6 @@ document.getElementById('btn-cerrar-perfil').addEventListener('click', () => {
 
 document.getElementById('form-perfil').addEventListener('submit', function(e) {
     e.preventDefault();
-    
     const usuarioSesion = JSON.parse(localStorage.getItem('usuario_actual'));
     const listaUsuarios = JSON.parse(localStorage.getItem('usuarios_sistema')) || [];
     
@@ -258,10 +259,14 @@ document.getElementById('form-perfil').addEventListener('submit', function(e) {
     }
 
     localStorage.setItem('usuario_actual', JSON.stringify(nuevosDatos));
-
     const displayNombre = document.getElementById('admin-name-display');
     if (displayNombre) displayNombre.textContent = nuevosDatos.nombre;
 
     alert("Perfil actualizado con éxito.");
     document.getElementById('modal-perfil').classList.remove('activo');
+});
+
+window.addEventListener('tipos-actualizados', () => {
+    actualizarSelectDinamico();
+    mostrarVehiculos(); 
 });
