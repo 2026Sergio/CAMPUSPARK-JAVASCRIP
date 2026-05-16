@@ -14,7 +14,6 @@
         <span class="logo">CAMPUS PARKING</span>
     </header>
     <nav id="menu-lateral" class="menu-navegacion">
-
         <div class="user-info">
             <img src="./IMAGENES/images.png" alt="admin">
             <p>Admin</p>
@@ -28,22 +27,24 @@
     <main class="contenedor-principal">
         <div class="seccion-registro">
             <form id="formulario1" class="mi-formulario">
-                <h2>Ingreso de Vehículos</h2>
+                <h2 id="titulo-form">Gestión de Vehículos</h2>
+                
                 <div class="grupo">
-                    <label>Nombre</label>
-                    <input type="text" id="nombre" placeholder="Ingrese nombre..." required>
+                    <label>Nombre del Propietario</label>
+                    <input type="text" id="nombre" placeholder="Nombre completo" required>
                 </div>
                 <div class="grupo">
                     <label>Tipo de vehículo</label>
                     <select id="vehiculo1" required>
                         <option value="">Seleccione</option>
-                        <option value="Moto">Moto</option>
-                        <option value="Carro">Carro</option>
+                        <option value="Moto">Moto (Q5)</option>
+                        <option value="Carro">Carro (Q10)</option>
+                        <option value="Camión">Camión (Q15)</option>
                     </select>
                 </div>
                 <div class="grupo">
-                    <label>Placa</label>
-                    <input type="text" id="placa1" placeholder="Ingrese placa..." required>
+                    <label>Placa (Formato: AAA123)</label>
+                    <input type="text" id="placa1" placeholder="Ej: PGT456" pattern="[A-Z]{3}[0-9]{3}" title="3 letras mayúsculas y 3 números" required>
                 </div>
                 <div class="grupo">
                     <label>Fecha</label>
@@ -54,83 +55,64 @@
                     <input type="time" id="hora1" required>
                 </div>
                 <div class="grupo">
-                    <label>Espacio asignado</label>
+                    <label>Espacio</label>
                     <input type="number" id="espacio1" min="1" max="10" required>
                 </div>
-                <button type="submit">
-                    Guardar Vehículo
-                </button>
+                <button type="submit" id="btn-submit">Guardar o Actualizar</button>
+                <button type="button" id="btn-cancelar" style="display:none; background:#888; color:white; margin-top:10px; border:none; padding:10px; cursor:pointer; width:100%;">Limpiar / Cancelar</button>
             </form>
         </div>
-          <div class="tabla-container">
-            <h2>Vehículos en Parqueo</h2>
+
+        <div class="tabla-container">
+            <h2>Vehículos en el Predio</h2>
+            <div class="tabla-container">
+    <h2>Vehículos en el Predio</h2>
+    
+    <div class="grupo-busqueda" style="margin-bottom: 15px;">
+        <input type="text" id="buscadorPlaca" placeholder="Buscar por placa..." 
+               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"
+               onkeyup="filtrarPorPlaca()">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Placa</th>
+                <th>Espacio</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+    </table>
+</div>
             <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Vehículo</th>
+                        <th>Tipo</th>
                         <th>Placa</th>
                         <th>Espacio</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
-                <tbody id="tabla-body">
-                </tbody>
+                <tbody id="tabla-body"></tbody>
             </table>
         </div>
-         <div class="contenedor-espacios">
 
-        <div class="espacio libre" id="espacio-1">
-            <p>Espacio 1</p>
-            <p>Libre</p>
+        <div class="contenedor-espacios">
+            <div class="espacio libre" id="espacio-1"><p>Espacio 1</p></div>
+            <div class="espacio libre" id="espacio-2"><p>Espacio 2</p></div>
+            <div class="espacio libre" id="espacio-3"><p>Espacio 3</p></div>
+            <div class="espacio libre" id="espacio-4"><p>Espacio 4</p></div>
+            <div class="espacio libre" id="espacio-5"><p>Espacio 5</p></div>
+            <div class="espacio libre" id="espacio-6"><p>Espacio 6</p></div>
+            <div class="espacio libre" id="espacio-7"><p>Espacio 7</p></div>
+            <div class="espacio libre" id="espacio-8"><p>Espacio 8</p></div>
+            <div class="espacio libre" id="espacio-9"><p>Espacio 9</p></div>
+            <div class="espacio libre" id="espacio-10"><p>Espacio 10</p></div>
         </div>
-
-        <div class="espacio libre" id="espacio-2">
-            <p>Espacio 2</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-3">
-            <p>Espacio 3</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-4">
-            <p>Espacio 4</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-5">
-            <p>Espacio 5</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-6">
-            <p>Espacio 6</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-7">
-            <p>Espacio 7</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-8">
-            <p>Espacio 8</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-9">
-            <p>Espacio 9</p>
-            <p>Libre</p>
-        </div>
-
-        <div class="espacio libre" id="espacio-10">
-            <p>Espacio 10</p>
-            <p>Libre</p>
-        </div>
-
-    </div>
     </main>
     <script src="./moduloJAVASCRIPT/nuevo.js"></script>
 </body>
