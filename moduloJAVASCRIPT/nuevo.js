@@ -27,21 +27,21 @@ mostrarHistorial();
 formulario.addEventListener("submit", function(e){
     e.preventDefault();
     
-    // Capturamos valores y limpiamos
     let placaInput = document.getElementById("placa1");
     let placaValor = placaInput.value.trim().toUpperCase(); 
     let horaValor = document.getElementById("hora1").value;
     let espacioValor = document.getElementById("espacio1").value;
     let esEdicion = placaInput.readOnly;
 
-    // VALIDACIÓN FLEXIBLE: Solo verificamos que no estén vacíos
     if (!horaValor) {
         alert("Por favor, ingresa una hora de entrada.");
         return;
     }
 
-    if (placaValor.length === 0) {
-        alert("La placa no puede estar vacía.");
+    // --- 1. VALIDACIÓN REAL DE PLACA (REGEX) ---
+    const regexPlaca = /^[A-Z]{3}[0-9]{3}$/;
+    if (!regexPlaca.test(placaValor)) {
+        alert("La placa debe tener formato ABC123");
         return;
     }
 
@@ -75,7 +75,6 @@ formulario.addEventListener("submit", function(e){
     };
 
     let indiceExistente = vehiculos.findIndex(v => v.placa === placaValor);
-
     if (indiceExistente !== -1) {
         vehiculos[indiceExistente] = datosVehiculo;
         alert("Datos actualizados.");
@@ -132,8 +131,12 @@ window.eliminar = function(index) {
     let minEntrada = (parseInt(partesEntrada[0]) * 60) + parseInt(partesEntrada[1]);
     let minSalida = (ahora.getHours() * 60) + ahora.getMinutes();
     
+    // --- 2. VALIDACIÓN DE TIEMPO REAL ---
     let diferencia = minSalida - minEntrada;
-    if (diferencia <= 0) { diferencia = 60; }
+    if (diferencia <= 0) { 
+        alert("Error: La hora de salida no puede ser anterior o igual a la hora de entrada.");
+        return; 
+    }
     
     let totalHoras = Math.ceil(diferencia / 60);
     let cobroTotal = totalHoras * precioCobro;
@@ -223,6 +226,25 @@ function actualizarSelectDinamico() {
         select.appendChild(op);
     });
 }
+
+// --- BUSCADOR DE PLACAS CORREGIDO PARA TU HTML ---
+window.filtrarPorPlaca = function() {
+    const input = document.getElementById("buscadorPlaca"); // ID exacto de tu HTML
+    const filtro = input.value.toUpperCase();
+    const filas = tablaBody.getElementsByTagName("tr");
+
+    for (let i = 0; i < filas.length; i++) {
+        const celdaPlaca = filas[i].getElementsByTagName("td")[2]; // Columna 2 es Placa
+        if (celdaPlaca) {
+            const texto = celdaPlaca.textContent || celdaPlaca.innerText;
+            if (texto.toUpperCase().indexOf(filtro) > -1) {
+                filas[i].style.display = "";
+            } else {
+                filas[i].style.display = "none";
+            }
+        }
+    }
+};
 
 // --- LÓGICA DE PERFIL ---
 window.abrirPerfil = function() {
