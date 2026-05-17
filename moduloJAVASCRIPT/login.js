@@ -1,4 +1,6 @@
 const formulario = document.getElementById('formulario');
+const passInput = document.getElementById('password');
+const checkVisible = document.getElementById('visible');
 
 let usuarios = JSON.parse(localStorage.getItem('usuarios_sistema')) || [
     {
@@ -10,13 +12,13 @@ let usuarios = JSON.parse(localStorage.getItem('usuarios_sistema')) || [
 
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
     
     const encontrado = usuarios.find(u => u.correo === user && u.pass === pass);
 
     if (encontrado) {
-        alert(`¡Bienvenido ${encontrado.nombre}!`);
+        alert("¡Bienvenido " + encontrado.nombre + "!");
         localStorage.setItem('usuario_actual', JSON.stringify(encontrado));
         window.location.href = './home.html';
     } else {
@@ -24,7 +26,10 @@ formulario.addEventListener('submit', (e) => {
     }
 });
 
-document.getElementById('visible').addEventListener('change', (e) => {
-    const passInput = document.getElementById('password');
-    passInput.type = e.target.checked ? 'text' : 'password';
+checkVisible.addEventListener('change', function() {
+    if (this.checked) {
+        passInput.type = 'text';
+    } else {
+        passInput.type = 'password';
+    }
 });

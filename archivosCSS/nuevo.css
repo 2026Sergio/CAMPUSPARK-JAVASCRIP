@@ -116,7 +116,6 @@ header {
 .tabla-contenedor2{
   color: #552727;
 }
-/* Estilos del Modal de Perfil */
 .contenedor-modal {
     position: fixed;
     top: 0;
@@ -124,14 +123,14 @@ header {
     width: 100%;
     height: 100vh;
     background: rgba(0, 0, 0, 0.8);
-    display: none; /* Oculto por defecto */
+    display: none; 
     justify-content: center;
     align-items: center;
     z-index: 3000;
 }
 
 .contenedor-modal.activo {
-    display: flex; /* Se muestra al agregar la clase activo */
+    display: flex; 
 }
 
 .modal-content-perfil {
@@ -199,3 +198,7 @@ header {
 
 .btn-guardar:hover { background: #2ecc71; }
 .btn-cancelar-modal:hover { background: #555; }
+/* Colores para el clima */
+.caliente { color: #e74c3c; font-weight: bold; } /* Rojo */
+.frio { color: #3498db; font-weight: bold; }    /* Azul */
+.templado { color: #2ecc71; }                   /* Verde */
