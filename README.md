@@ -6,6 +6,29 @@ precisos de cobro por tiempo transcurrido.
 ## DIAGRAMA DE FLUJO
 ![alt text](./IMAGENES/image.png)
 
+## Estructura de Archivos
+
+### archivosCSS
+* **animacion.css**: Gestiona las transiciones y efectos visuales de la interfaz.
+* **formulario.css**: Define el diseño y estilos de los campos de entrada de datos.
+* **login.css**: Estilos específicos para la página de inicio de sesión.
+* **nuevo.css**: Hoja de estilos principal para la gestión de registros y el home.
+* **responsive.css**: Ajustes para que la aplicación sea compatible con dispositivos móviles.
+
+### moduloJAVASCRIPT
+* **api.js**: Contiene la lógica para conectar con la API de clima y mostrar datos en tiempo real.
+* **componentes-tipo.js**: Maneja la configuración de tipos de vehículos y sus tarifas.
+* **login.js**: Controla la validación de usuarios y el acceso al sistema.
+* **nuevo.js**: Lógica principal del parqueo (Ingresos, Salidas, CRUD y LocalStorage).
+
+### Documentos HTML y Otros
+* **index.html**: Página de inicio (Login).
+* **home.html**: Panel de control principal del parqueo.
+* **historial.html**: Visualización de bitácoras y registros de salidas.
+* **registros.html**: Módulo de administración de tarifas y tipos de vehículos.
+* **.gitignore**: Archivo de configuración para excluir archivos innecesarios en el repositorio.
+* **README.md**: Documentación general del proyecto.
+
 # Campus Parking 
 Sistema de gestión de estacionamiento desarrollado para el
 control de ingreso, salida y cobro de vehículos en tiempo

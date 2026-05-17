@@ -1,3 +1,4 @@
+// --- VARIABLES Y CONFIGURACIÓN ---
 const btnMenu = document.getElementById('btn-menu');
 const menu = document.getElementById('menu-lateral');
 const overlay = document.getElementById('overlay');
@@ -9,6 +10,7 @@ const btnCancelar = document.getElementById("btn-cancelar");
 const tablaSalidaBody = document.getElementById("tabla-salida-body");
 const tablaHistorialBody = document.getElementById("tabla-historial-body");
 
+// Abre y cierra el menú lateral y la capa oscura
 function toggleMenu(){
     menu.classList.toggle('active');
     overlay.classList.toggle('active');
@@ -23,6 +25,7 @@ actualizarSelectDinamico();
 mostrarVehiculos();
 mostrarHistorial();
 
+// Registra un carro nuevo o guarda los cambios si se está editando uno
 formulario.addEventListener("submit", function(e){
     e.preventDefault();
     
@@ -85,6 +88,7 @@ formulario.addEventListener("submit", function(e){
     mostrarVehiculos();
 });
 
+// Pinta los carros en la tabla y cambia el color de los espacios (Rojo/Verde)
 function mostrarVehiculos(){
     if(!tablaBody) return;
     tablaBody.innerHTML = "";
@@ -116,6 +120,7 @@ function mostrarVehiculos(){
     });
 }
 
+// Saca al carro del parqueo, calcula el tiempo y cuánto debe pagar
 window.eliminar = function(index) {
     let v = vehiculos[index];
     let ahora = new Date();
@@ -158,6 +163,7 @@ window.eliminar = function(index) {
     mostrarHistorial();
 };
 
+// Muestra la lista de todos los carros que ya salieron y pagaron su cuota
 function mostrarHistorial() {
     if (tablaSalidaBody) tablaSalidaBody.innerHTML = "";
     if (tablaHistorialBody) tablaHistorialBody.innerHTML = "";
@@ -183,6 +189,7 @@ function mostrarHistorial() {
     });
 }
 
+// Saca los datos de la tabla y los pone en el formulario para editarlos
 window.subirParaEditar = function(placaBusqueda) {
     let v = vehiculos.find(veh => veh.placa === placaBusqueda);
     if(v) {
@@ -203,6 +210,7 @@ window.subirParaEditar = function(placaBusqueda) {
 
 btnCancelar.onclick = resetearFormulario;
 
+// Limpia todos los cuadros del formulario para dejarlo como nuevo
 function resetearFormulario() {
     formulario.reset();
     document.getElementById("placa1").readOnly = false;
@@ -211,6 +219,7 @@ function resetearFormulario() {
     btnCancelar.style.display = "none";
 }
 
+// Carga los tipos de vehículos (carro, moto, etc.) desde la memoria al select
 function actualizarSelectDinamico() {
     const select = document.getElementById("vehiculo1");
     if(!select) return;
@@ -224,7 +233,7 @@ function actualizarSelectDinamico() {
     });
 }
 
-
+// Busca un carro en la tabla según lo que escribas de la placa
 window.filtrarPorPlaca = function() {
     const input = document.getElementById("buscadorPlaca"); 
     const filtro = input.value.toUpperCase();
@@ -243,6 +252,7 @@ window.filtrarPorPlaca = function() {
     }
 };
 
+// Abre la ventanita para ver y cambiar los datos de tu perfil de admin
 window.abrirPerfil = function() {
     const usuarioLogeado = JSON.parse(localStorage.getItem('usuario_actual'));
     if (usuarioLogeado) {
@@ -255,10 +265,12 @@ window.abrirPerfil = function() {
     }
 };
 
+// Cierra la ventana flotante del perfil del administrador
 document.getElementById('btn-cerrar-perfil').addEventListener('click', () => {
     document.getElementById('modal-perfil').classList.remove('activo');
 });
 
+// Guarda los nuevos datos de nombre o correo del administrador en el sistema
 document.getElementById('form-perfil').addEventListener('submit', function(e) {
     e.preventDefault();
     const usuarioSesion = JSON.parse(localStorage.getItem('usuario_actual'));
@@ -284,6 +296,7 @@ document.getElementById('form-perfil').addEventListener('submit', function(e) {
     document.getElementById('modal-perfil').classList.remove('activo');
 });
 
+// Refresca la tabla y el select cuando se cambian los precios o tipos
 window.addEventListener('tipos-actualizados', () => {
     actualizarSelectDinamico();
     mostrarVehiculos(); 
